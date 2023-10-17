@@ -1,0 +1,39 @@
+--- a/src/command.C	2023-10-17 19:49:40.300123111 -0300
++++ b/src/command.C	2023-10-17 19:51:12.793456894 -0300
+@@ -1297,9 +1297,26 @@
+     }
+ 
+   button_number = MEvent.button - Button1;
++
++  if (button_number < 0)
++    {
++      button_number = 3;
++      goto released;
++    }
++
+   /* add 0x3D for wheel events, like xterm does */
+   if (button_number >= 3)
+-    button_number += 64 - 3;
++    {
++      button_number += 64 - 3;
++      MEvent.button = 0;
++    }
++
++released:
++
++  if (release)
++    {
++      MEvent.button = 0;
++    }
+ 
+   if (priv_modes & PrivMode_MouseX10)
+     {
+@@ -1327,7 +1344,7 @@
+ #endif
+     }
+ 
+-  int code = 32 + (release ? 3 : button_number) + state;
++  int code = 32 + (release ? (MEvent.state= 0, 3) : button_number) + state;
+ 
+ #if DEBUG_MOUSEREPORT
+   fprintf (stderr, "Mouse [");
