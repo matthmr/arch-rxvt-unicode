@@ -1,0 +1,51 @@
+--- a/src/command.C	2024-02-20 09:52:16.170236496 -0300
++++ b/src/command.C	2024-02-20 09:57:03.100245288 -0300
+@@ -1297,9 +1297,26 @@
+     }
+ 
+   button_number = MEvent.button - Button1;
++
++  if (button_number < 0)
++    {
++      button_number = 3;
++      goto released;
++    }
++
+   /* add 0x3D for wheel events, like xterm does */
+   if (button_number >= 3)
+-    button_number += 64 - 3;
++    {
++      button_number += 64 - 3;
++      MEvent.button = 0;
++    }
++
++released:
++
++  if (release)
++    {
++      MEvent.button = 0;
++    }
+ 
+   if (priv_modes & PrivMode_MouseX10)
+     {
+@@ -1327,7 +1344,7 @@
+ #endif
+     }
+ 
+-  int code = 32 + (release ? 3 : button_number) + state;
++  int code = 32 + (release ? (MEvent.state= 0, 3) : button_number) + state;
+ 
+ #if DEBUG_MOUSEREPORT
+   fprintf (stderr, "Mouse [");
+@@ -3426,9 +3443,9 @@
+         snprintf (rgba_str, sizeof (rgba_str), "rgb:%04x/%04x/%04x", c.r, c.g, c.b);
+ 
+       if (IN_RANGE_INC (color, minCOLOR, maxTermCOLOR))
+-        tt_printf ("\033]%d;%d;%s%c", report, color - minCOLOR, rgba_str, resp);
++        tt_printf ("\033]%d;%d;%s\033\\", report, color - minCOLOR, rgba_str);
+       else
+-        tt_printf ("\033]%d;%s%c", report, rgba_str, resp);
++        tt_printf ("\033]%d;%s\033\\", report, rgba_str);
+     }
+   else
+     set_window_color (color, str);
