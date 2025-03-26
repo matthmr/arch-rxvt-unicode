@@ -10,8 +10,8 @@ pkgname=('rxvt-unicode' 'rxvt-unicode-terminfo')
 pkgver=9.31
 pkgrel=7
 arch=('x86_64')
-url='http://software.schmorp.de/pkg/rxvt-unicode.html'
-license=('GPL')
+url='https://software.schmorp.de/pkg/rxvt-unicode.html'
+license=('GPL-3.0-only')
 makedepends=(
   'libxft'
   'libxt'
@@ -23,8 +23,8 @@ makedepends=(
   'libptytty'
   'signify'
 )
-source=("$pkgname-$pkgver.tar.bz2::http://dist.schmorp.de/rxvt-unicode/$pkgname-$pkgver.tar.bz2"
-        "$pkgname-$pkgver.tar.bz2.signature::http://dist.schmorp.de/rxvt-unicode/$pkgname-$pkgver.tar.bz2.sig"
+source=("$pkgname-$pkgver.tar.bz2::https://dist.schmorp.de/rxvt-unicode/$pkgname-$pkgver.tar.bz2"
+        "$pkgname-$pkgver.tar.bz2.signature::https://dist.schmorp.de/rxvt-unicode/$pkgname-$pkgver.tar.bz2.sig"
         'signing-key.pub'
         'perl-5.38.patch'
         'urxvt.desktop'
