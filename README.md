@@ -13,4 +13,3 @@ merges against versions in the `pkg` branch
 
 1. fixed a bug with mouse events that made it so that the `release` event
    wouldn't register
-2. fix a bug with color responses to OSC 11/OSC 10
